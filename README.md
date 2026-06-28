@@ -69,14 +69,21 @@ DineFlow
 
 ---
 
-## 🎯 Future Enhancements
 
-- Email Notifications
-- QR-based Meal Verification
-- Push Notifications
-- Analytics Dashboard
-- Dark Mode
-- Mobile Responsive Design
+## 🌟 Project Highlights
+
+- Full-Stack MERN Architecture
+- JWT-based Authentication & Authorization
+- Role-Based Access Control (Student & Admin)
+- Secure Password Hashing with bcryptjs
+- RESTful API Integration
+- CRUD Operations for Menus, Complaints & Reviews
+- Responsive User Interface
+- Clean and Modular Folder Structure
+- Reusable React Components
+- MongoDB Atlas Integration
+
+
 
 ---
 
