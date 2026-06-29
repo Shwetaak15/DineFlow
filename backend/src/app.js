@@ -19,8 +19,19 @@ app.use("/api/users", userRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
-app.get("/", (req, res) => {
-  res.send("DineFlow Backend Running");
+const path = require("path");
+
+// Serve Frontend Static Files in Production
+const frontendDistPath = path.join(__dirname, "../../frontend/dist");
+app.use(express.static(frontendDistPath));
+
+// Catch-all route to serve the Single Page Application (SPA)
+app.get("/*splat", (req, res) => {
+  res.sendFile(path.join(frontendDistPath, "index.html"), (err) => {
+    if (err) {
+      res.status(200).send("DineFlow Backend is running. Frontend build not found.");
+    }
+  });
 });
 
 module.exports = app;
