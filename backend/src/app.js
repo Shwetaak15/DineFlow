@@ -29,6 +29,8 @@ app.use(express.static(frontendDistPath));
 app.get("/*splat", (req, res) => {
   res.sendFile(path.join(frontendDistPath, "index.html"), (err) => {
     if (err) {
+      console.error("Error sending index.html:", err);
+      console.log("Attempted path:", path.join(frontendDistPath, "index.html"));
       res.status(200).send("DineFlow Backend is running. Frontend build not found.");
     }
   });
