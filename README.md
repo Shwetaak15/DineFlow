@@ -4,9 +4,13 @@ A full-stack MERN application built to streamline hostel dining operations throu
 
 ## 🚀 Live Demo
 
-🌐 **Frontend:** https://dine-flow-three-omega.vercel.app/
+| Service | URL |
+|---------|-----|
+| 🌐 **Frontend** | [https://frontend-tau-gray-97vgan5xk9.vercel.app](https://frontend-tau-gray-97vgan5xk9.vercel.app) |
+| ⚙️ **Backend API** | [https://dineflow-backend-thir.onrender.com](https://dineflow-backend-thir.onrender.com) |
+| 🗄️ **Database** | MongoDB Atlas (Cluster0) |
 
-> ⚠️ Backend deployment is in progress.
+> 💡 **Note:** The backend is hosted on Render's free tier — the first request after inactivity may take ~30–60 seconds to respond (cold start).
 
 ---
 
@@ -38,6 +42,7 @@ A full-stack MERN application built to streamline hostel dining operations throu
 - React Router DOM
 - Axios
 - Tailwind CSS
+- Vite (Build Tool)
 
 ### Backend
 - Node.js
@@ -47,14 +52,35 @@ A full-stack MERN application built to streamline hostel dining operations throu
 - JWT Authentication
 - bcryptjs
 
+### Deployment
+- **Frontend:** Vercel
+- **Backend:** Render
+- **Database:** MongoDB Atlas
+
 ---
 
 ## 📂 Project Structure
 
 ```text
-DineFlow
-├── frontend
-├── backend
+DineFlow/
+├── frontend/                # React + Vite frontend
+│   ├── src/
+│   │   ├── components/      # Reusable UI components
+│   │   ├── pages/           # Page-level components
+│   │   ├── services/        # API service layer
+│   │   └── utils/           # Utility functions & axios config
+│   ├── vercel.json          # Vercel SPA routing config
+│   └── .env.example         # Frontend env template
+├── backend/
+│   ├── src/
+│   │   ├── config/          # Database configuration
+│   │   ├── controllers/     # Route handlers
+│   │   ├── middleware/      # Auth middleware
+│   │   ├── models/          # Mongoose schemas
+│   │   └── routes/          # API route definitions
+│   └── .env.example         # Backend env template
+├── render.yaml              # Render deployment blueprint
+├── package.json             # Root orchestration scripts
 └── README.md
 ```
 
@@ -69,7 +95,6 @@ DineFlow
 
 ---
 
-
 ## 🌟 Project Highlights
 
 - Full-Stack MERN Architecture
@@ -82,6 +107,7 @@ DineFlow
 - Clean and Modular Folder Structure
 - Reusable React Components
 - MongoDB Atlas Integration
+- Fully Deployed (Frontend on Vercel, Backend on Render, DB on MongoDB Atlas)
 
 ---
 
@@ -133,6 +159,7 @@ We have provided a blueprint (`render.yaml`) for one-click setup on [Render](htt
 4. Supply the env variables in the Render dashboard:
    - `MONGO_URI`: Your MongoDB Atlas URI.
    - `JWT_SECRET`: A secure random string for signing JWT tokens.
+   - `PORT`: `10000` (Render's default for free tier).
 
 *Alternatively, manually create a Render Web Service with:*
 - **Build Command:** `npm install`
@@ -141,11 +168,11 @@ We have provided a blueprint (`render.yaml`) for one-click setup on [Render](htt
 
 ---
 
-### ⚡ Frontend Cloud Deployment (Vercel / Netlify)
+### ⚡ Frontend Cloud Deployment (Vercel)
 1. Go to [Vercel](https://vercel.com/) and import your project repository.
 2. Select `frontend` as the **Root Directory**.
 3. Add the following **Environment Variable**:
-   - `VITE_API_URL`: Your deployed backend service URL (e.g., `https://dineflow-backend.onrender.com/api`).
+   - `VITE_API_URL`: Your deployed backend service URL (e.g., `https://dineflow-backend-thir.onrender.com/api`).
 4. Vercel will automatically detect Vite, set the build command to `npm run build`, and deploy the frontend.
 
 ---
