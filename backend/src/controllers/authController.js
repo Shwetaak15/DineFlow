@@ -53,7 +53,7 @@ const loginUser = async (req, res) => {
     id: user._id,
     role: user.role,
   },
-  process.env.JWT_SECRET || "dineflow_dev_secret_key_12345",
+  process.env.JWT_SECRET,
   {
     expiresIn: "7d",
   }
