@@ -3,12 +3,13 @@ services:
     name: dineflow-backend
     env: node
     plan: free
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend
+    startCommand: npm start --prefix backend
+    healthCheckPath: /api/health
     envVars:
       - key: PORT
         value: 5050
       - key: MONGO_URI
         sync: false
       - key: JWT_SECRET
-        sync: false
+        generateValue: true

@@ -137,7 +137,7 @@ To run DineFlow locally:
    ```bash
    npm run dev
    ```
-   - Backend will run on [http://localhost:5000](http://localhost:5000)
+   - Backend will run on [http://localhost:5050](http://localhost:5050)
    - Frontend will run on [http://localhost:5173](http://localhost:5173)
 
 ---
