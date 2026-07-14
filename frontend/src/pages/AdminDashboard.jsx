@@ -20,14 +20,29 @@ const AdminDashboard = () => {
   meals: 0,
 });
 
+const [recentComplaints, setRecentComplaints] = useState([]);
+
 useEffect(() => {
   fetchStats();
+  fetchRecentComplaints();
 }, []);
 
 const fetchStats = async () => {
   try {
     const res = await axios.get("/dashboard");
     setStats(res.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const fetchRecentComplaints = async () => {
+  try {
+    const res = await axios.get("/complaints");
+    const sorted = [...res.data].sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+    setRecentComplaints(sorted.slice(0, 5));
   } catch (err) {
     console.log(err);
   }
@@ -176,7 +191,10 @@ return (
       Recent Complaints
     </h2>
 
-    <button className="text-violet-600 hover:text-violet-500 font-bold transition text-sm cursor-pointer">
+    <button
+      onClick={() => navigate("/manage-complaints")}
+      className="text-violet-600 hover:text-violet-500 font-bold transition text-sm cursor-pointer"
+    >
       View All
     </button>
   </div>
@@ -203,37 +221,50 @@ return (
 
       <tbody>
 
-        <tr className="border-b border-slate-100 hover:bg-slate-50/50 transition">
+        {recentComplaints.length === 0 ? (
+          <tr>
+            <td
+              colSpan="4"
+              className="py-6 px-4 text-sm text-slate-500 font-medium text-center"
+            >
+              No Complaints Found
+            </td>
+          </tr>
+        ) : (
+          recentComplaints.map((complaint) => (
+            <tr
+              key={complaint._id}
+              className="border-b border-slate-100 hover:bg-slate-50/50 transition"
+            >
+              <td className="py-4 px-4 text-sm font-semibold text-slate-700">
+                {complaint.student?.name || "Unknown"}
+              </td>
 
-          <td className="py-4 px-4 text-sm font-semibold text-slate-700">Shweta</td>
+              <td className="py-4 px-4 text-sm text-slate-600 font-medium">
+                {complaint.subject}
+              </td>
 
-          <td className="py-4 px-4 text-sm text-slate-600 font-medium">Food Quality</td>
+              <td className="py-4 px-4 text-sm">
+                <span
+                  className={
+                    complaint.status === "Resolved"
+                      ? "bg-emerald-50 text-emerald-700 border border-emerald-100/60 px-3 py-1 rounded-full text-xs font-bold"
+                      : "bg-amber-50 text-amber-700 border border-amber-100/60 px-3 py-1 rounded-full text-xs font-bold"
+                  }
+                >
+                  {complaint.status}
+                </span>
+              </td>
 
-          <td className="py-4 px-4 text-sm">
-            <span className="bg-amber-50 text-amber-705 border border-amber-100/60 px-3 py-1 rounded-full text-xs font-bold">
-              Pending
-            </span>
-          </td>
-
-          <td className="py-4 px-4 text-sm text-slate-500 font-medium">26 Jun</td>
-
-        </tr>
-
-        <tr className="border-b border-slate-100 hover:bg-slate-50/50 transition">
-
-          <td className="py-4 px-4 text-sm font-semibold text-slate-700">Rahul</td>
-
-          <td className="py-4 px-4 text-sm text-slate-600 font-medium">Late Dinner</td>
-
-          <td className="py-4 px-4 text-sm">
-            <span className="bg-emerald-50 text-emerald-700 border border-emerald-100/60 px-3 py-1 rounded-full text-xs font-bold">
-              Resolved
-            </span>
-          </td>
-
-          <td className="py-4 px-4 text-sm text-slate-500 font-medium">25 Jun</td>
-
-        </tr>
+              <td className="py-4 px-4 text-sm text-slate-500 font-medium">
+                {new Date(complaint.createdAt).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "short",
+                })}
+              </td>
+            </tr>
+          ))
+        )}
 
       </tbody>
 
