@@ -13,6 +13,8 @@ import {
 const StudentDashboard = () => {
   const [menu, setMenu] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [activeComplaints, setActiveComplaints] = useState(0);
+  const [reviewCount, setReviewCount] = useState(0);
 
   const navigate = useNavigate();
 
@@ -30,9 +32,32 @@ const StudentDashboard = () => {
     }
   };
 
+  const fetchStats = async () => {
+    try {
+      const [complaintsRes, reviewsRes] = await Promise.all([
+        axios.get("/complaints/my"),
+        axios.get("/reviews/my"),
+      ]);
+
+      setActiveComplaints(
+        complaintsRes.data.filter((c) => c.status !== "Resolved").length
+      );
+      setReviewCount(reviewsRes.data.length);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     fetchMenu();
+    fetchStats();
   }, []);
+
+  const mealsAvailable = menu
+    ? [menu.breakfast, menu.lunch, menu.dinner].filter(
+        (meal) => Array.isArray(meal) && meal.length > 0
+      ).length
+    : 0;
 
   return (
     <div className="h-screen bg-slate-50 text-slate-800 flex overflow-hidden">
@@ -158,7 +183,7 @@ const StudentDashboard = () => {
             </div>
 
             <h2 className="text-4xl font-extrabold text-slate-905 mt-3 tracking-tight">
-              3
+              {mealsAvailable}
             </h2>
 
             <p className="text-slate-400 text-xs font-semibold mt-1">
@@ -183,7 +208,7 @@ const StudentDashboard = () => {
             </div>
 
             <h2 className="text-4xl font-extrabold text-slate-905 mt-3 tracking-tight">
-              0
+              {activeComplaints}
             </h2>
 
             <p className="text-slate-400 text-xs font-semibold mt-1">
@@ -208,7 +233,7 @@ const StudentDashboard = () => {
             </div>
 
             <h2 className="text-4xl font-extrabold text-slate-905 mt-3 tracking-tight">
-              0
+              {reviewCount}
             </h2>
 
             <p className="text-slate-400 text-xs font-semibold mt-1">
