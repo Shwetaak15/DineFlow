@@ -8,9 +8,9 @@ DineFlow is a full-stack MERN application designed to modernize hostel dining ma
 
 ## 🌐 Live Demo
 
-**Frontend:** https://dine-flow-three-omega.vercel.app/
+https://dine-flow-three-omega.vercel.app/
 
-> **Backend:** Deployment in progress.
+
 
 ---
 
