@@ -17,6 +17,6 @@ router.get("/my", authMiddleware, getMyComplaints);
 
 // Admin Only
 router.get("/", authMiddleware, adminMiddleware, getComplaints);
-router.put("/:id", authMiddleware, adminMiddleware, replyToComplaint);
+router.put("/:id/reply", authMiddleware, adminMiddleware, replyToComplaint);
 
 module.exports = router;
